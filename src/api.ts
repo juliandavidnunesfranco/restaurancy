@@ -133,8 +133,8 @@ const api = {
 
   list: async (): Promise<Restaurant[]> => {
     // Obtenemos la información de Google Sheets en formato texto y la dividimos por líneas, nos saltamos la primera línea porque es el encabezado
-    const [, ...data] = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vR7vIiYQTtrfhE8MdiXQ6dmNSxStNYh9Dzoi5ENMFbWVccthlnoYmvfZuWQyW4FuDn1vGhtHfy9KXtx/pub?output=csv',
-    )  //{cache: "no-store"  / "force-cache"}  o   {next: {revalidate: 20}}  o   {tags: 'Products'}
+    const [, ...data] = await fetch(process.env.DATA_BASE_URL)
+      //{cache: "no-store"  / "force-cache"}  o   {next: {revalidate: 20}}  o   {tags: 'Products'}
     .then(res => res.text())
     .then(text => text.split('\n'))
 
@@ -159,7 +159,7 @@ const api = {
   
 
   fetch: async (id: Restaurant["id"])=>{
-    const [, ...data] = await fetch('https://docs.google.com/spreadsheets/d/e/2PACX-1vR7vIiYQTtrfhE8MdiXQ6dmNSxStNYh9Dzoi5ENMFbWVccthlnoYmvfZuWQyW4FuDn1vGhtHfy9KXtx/pub?output=csv',
+    const [, ...data] = await fetch(process.env.DATA_BASE_URL,
     { next: { tags: ['restaurant'] } }) // se ejecuta en revalidate/route
     .then(res => res.text())
     .then(text => text.split('\n'))
